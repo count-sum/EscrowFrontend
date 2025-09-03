@@ -29,17 +29,6 @@ interface OfferAccount {
   data: Uint8Array
 }
 
-interface SolanaRpcAccount {
-  account: {
-    executable: boolean
-    lamports: bigint
-    owner: string
-    rentEpoch: bigint
-    space: bigint
-    data: string // Base58 encoded
-  }
-  pubkey: string
-}
 
 export function useEscrowDappProgramId() {
   const { cluster } = useWalletUi()
@@ -57,7 +46,7 @@ export function useGetProgramAccountQuery() {
 export function useGetOffersQuery(): {
   data: OfferAccount[] | undefined
   isLoading: boolean
-  error: any
+  error: any // eslint-disable-line @typescript-eslint/no-explicit-any
   refetch: () => void
 } {
   const { client, cluster } = useWalletUi()
@@ -72,14 +61,14 @@ export function useGetOffersQuery(): {
             {
               memcmp: {
                 offset: BigInt(0),
-                bytes: Buffer.from(OFFER_ACCOUNT_DISCRIMINATOR).toString('base64') as any,
+                bytes: Buffer.from(OFFER_ACCOUNT_DISCRIMINATOR).toString('base64') as any, // eslint-disable-line @typescript-eslint/no-explicit-any
                 encoding: 'base64' as const
               }
             }
           ]
         }).send()
 
-        return response.map((account: any): OfferAccount => ({
+        return response.map((account: any): OfferAccount => ({ // eslint-disable-line @typescript-eslint/no-explicit-any
           pubkey: account.pubkey.toString(),
           data: Buffer.from(account.account.data, 'base64')
         }))
@@ -102,7 +91,7 @@ interface MakeOfferParams {
 
 export function useMakeOfferMutation() {
   const programId = useEscrowDappProgramId()
-  const { account, cluster } = useWalletUi()
+  const { account } = useWalletUi()
   const txSigner = useWalletUiSigner()
   const signAndSend = useWalletTransactionSignAndSend()
 
@@ -132,7 +121,7 @@ export function useMakeOfferMutation() {
       const connection = new Connection(clusterApiUrl())
       const accountInfo = await connection.getAccountInfo(makerTokenAccountA)
 
-      const instructions: any[] = []
+      const instructions: any[] = [] // eslint-disable-line @typescript-eslint/no-explicit-any
 
       // Create ATA if it doesn't exist
       if (!accountInfo) {
@@ -231,7 +220,7 @@ export function useTakeOfferMutation() {
         TOKEN_PROGRAM_ID
       )
 
-      const instruction: any = {
+      const instruction: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
         programAddress: programId,
         accounts: [
           { address: ASSOCIATED_TOKEN_PROGRAM_ID.toString(), role: 0 }, // readonly
@@ -293,7 +282,7 @@ export function useRefundOfferMutation() {
         TOKEN_PROGRAM_ID
       )
 
-      const instruction: any = {
+      const instruction: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
         programAddress: programId,
         accounts: [
           { address: TOKEN_PROGRAM_ID.toString(), role: 0 }, // readonly

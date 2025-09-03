@@ -374,11 +374,11 @@ export function EscrowDappProgram() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-white-700">
             <p>• <strong>Create Offer:</strong> Deposit tokens and specify what you want in return</p>
-            <p>• <strong>Take Offer:</strong> Accept someone's offer by providing the requested tokens</p>
+            <p>• <strong>Take Offer:</strong> Accept an offer by providing the requested tokens</p>
             <p>• <strong>Refund Offer:</strong> Cancel your offer and get your tokens back</p>
             <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
               <p className="text-yellow-800">
-                <strong>Note:</strong> You'll need to have the tokens in your wallet before creating offers.
+                <strong>Note:</strong> You will need to have the tokens in your wallet before creating offers.
               </p>
             </div>
           </CardContent>
